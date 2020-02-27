@@ -1,0 +1,179 @@
+@charset "utf-8";
+
+#popup-lightbox{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0,0,0,0.6);
+	overflow-y: scroll;
+	z-index: 1000;
+}
+
+.contenedor-popup{
+	position: absolute;
+	display: flex;
+	margin: 100px 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100%;
+	max-width: 850px;
+	background-color: #FFFFFF;
+}
+
+.contenedor-popup-1{
+	padding: 25px 25px 0px;
+	width: 100%;
+	max-width: 475px;
+	border-right: 1px solid #DBE0DF;
+}
+.contenedor-popup-2{
+	padding: 25px 25px 0px;
+	width: 100%;
+	max-width: 375px;
+}
+
+.form-flex{
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+}
+
+#button-cerrar-popup{
+	position: absolute;
+	right: -25px;
+	top: -25px;
+	display: inline-block;
+	height: 25px;
+	width: 25px;
+	border-radius: 25px;
+	cursor: pointer;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+/* HEADER Contenedor 1 */
+.contenedor-flex{
+	display: flex;
+	align-items: center;
+}
+
+#puf-placa{
+	font-size: 32px;
+	font-weight: 700;
+}
+
+.contenedor-flex > .btn-status{
+	margin-left: 25px;
+}
+
+#puf-btn-editar, #puf-btn-reg-kilometraje{
+	color: #fdab3d !important;
+	border: 1px solid #fdab3d !important;
+	margin-left: auto;
+}
+
+#puf-btn-editar > span, 
+#puf-btn-reg-kilometraje > span{
+	margin-right: 5px;
+}
+
+#puf-tipoVehiculo{
+	display: block;
+	margin-bottom: 25px;
+}
+
+/* HEADER Contenedor 2 */
+#puf-titulo-kilometraje{
+	font-size: 24px;
+	font-weight: 600;
+}
+
+/* Especiales para INPUTS */
+.numContenedor{
+	max-width: 40px;
+	height: 40px;
+	padding: 0 15px;
+	border: 1px solid #DBE0DF;
+	line-height: 40px;
+}
+
+.margen-contenedor{
+	margin-bottom: 10px;
+}
+
+.puf-usoContenedor{
+	width: calc(100% - 75px) !important;
+}
+
+/* Estructura los elementos dentro del form */
+#form-p1 > div, #form-p3 > div{
+	width: calc(50% - 2.5%);
+	margin-right: 5%;
+	margin-bottom: 25px;
+}
+
+#form-p1 > div:nth-child(2n), #form-p3 > div:nth-child(2n){
+	margin-right: 0;
+}
+
+#form-p2 > div, #form-p4 > div{
+	width: 100%;
+	margin-bottom: 25px;
+}
+
+#form-p2 > div:nth-last-of-type(1){
+	margin-bottom: 0;
+}
+
+#form-p3{
+	margin-top: 25px;
+}
+
+/* TABLA KILOMETRAJE */
+/* Filas de la tabla */
+.tabla-fila-kilometraje{
+	padding: 0 15px;
+	min-height: 50px;
+	max-height: 100px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	overflow: hidden;
+	border: 1px solid #DBE0DF;
+}
+
+.contenedor-popup-2 > .contenedor-flex{
+	margin-bottom: 25px;
+}
+
+/* Separaciones entre columnas */
+.tabla-fila-kilometraje > .tabla-col:nth-child(1){
+	width: 50%;
+}
+.tabla-fila-kilometraje > .tabla-col:nth-child(2){
+	width: 50%;
+}
+
+.nocss-select{
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	width: auto;
+	height: auto;
+	padding: 0;
+	background-color: #FFFFFF !important;
+	border: none;
+}
+
+.nocss-input{
+	display: block !important;
+	width: 30%;
+	height: auto;
+	padding: 0;
+	background-color: #FFFFFF !important;
+	border: none;
+}

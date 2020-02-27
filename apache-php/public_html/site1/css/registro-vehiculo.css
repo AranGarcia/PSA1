@@ -1,0 +1,85 @@
+@charset "utf-8";
+
+header{
+	position: relative;
+}
+
+.btn-nav-paginas{
+	border: 1px solid #DBE0DF;
+	height: 40px;
+	width: 40px;
+	padding: 0 !important;
+	margin-left: 10px;
+	color: #607994;
+}
+
+#popup-lightbox{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0,0,0,0.6);
+	overflow-y: scroll;
+	z-index: 1000;
+}
+
+.contenedor-form{
+	position: relative;
+	margin: 70px auto 70px;
+	padding: 25px 25px 65px;
+	width: 90%;
+	max-width: 1200px;
+	background-color: #FFFFFF;
+	border: 1px solid #DBE0DF;
+}
+
+.form-flex{
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+}
+
+.contenedor-flex{
+	display: flex;
+	align-items: center;
+}
+
+/* Especiales para INPUTS */
+.numContenedor{
+	max-width: 40px;
+	height: 40px;
+	padding: 0 15px;
+	border: 1px solid #DBE0DF;
+	line-height: 40px;
+}
+
+.f-usoContenedor{
+	width: calc(100% - 75px) !important;
+}
+
+/* Estructura los elementos dentro del form */
+#form-p1 > div, #form-p3 > div{
+	width: 30%;
+	margin-right: 5%;
+	margin-bottom: 25px;
+}
+
+#form-p1 > div:nth-child(3n), #form-p3 > div:nth-child(3n){
+	margin-right: 0;
+}
+
+#form-p2 > div, #form-p4 > div{
+	width: 100%;
+	margin-bottom: 25px;
+}
+
+#form-p2 > div:nth-last-of-type(1){
+	margin-bottom: 5px;
+}
+
+#form-p3{
+	margin-top: 25px;
+}

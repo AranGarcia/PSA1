@@ -1,15 +1,424 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Site 2</title>
-</head>
+	<meta charset="UTF-8">
+	<title>CRUD</title>
+	<!-- ENLACES A CSS -->
+	<link rel="stylesheet" type="text/css" href="css/master.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/pop-up.css">
+	<!-- ENLACES A ICONOS -->
+	<link rel="stylesheet" type="text/css" href="icon/crud_icons.css">
+	<!-- ENLACES A FUNTE -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<!-- ENLACES A JS -->
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="js/pop-up.js"></script>
+	<script src="js/funciones.js"></script>
+	<!-- SweatAlert -->
+	
+	<!--<script src="SweatAlert/js/sweetalert.min.js"></script> 
+    <link href="SweatAlert/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+    -->
 
+</head>
 <body>
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo aperiam delectus, quos autem repellendus unde eaque
-    blanditiis, voluptatem ullam maiores fugit. Numquam, quis dolores. Quibusdam deserunt molestiae optio recusandae
-    laudantium?
+	<header>
+		<div id="header-background">
+			<div id="header-p1" class="header-p12">
+				<!-- TITULO -->
+				<div id="header-titulo">
+					<h1>Vehículos Recolectores</h1>
+				</div>
+				<!-- Botón para agregar más automóviles -->
+				<a href="registro-vehiculo.html"><button id="btn-nuevo-vehiculo"><span class="icon-insert"></span>Nuevo vehículo</button></a>
+			</div>
+
+			<div id="header-p2" class="header-p12 contenedor-blanco">
+				<!-- Barra de BUSQUEDA -->	
+				<form id="contenedor-barra-busqueda">
+					<input type="text" id="input-busqueda" placeholder="Buscar por placa o número económico">
+				</form>
+				<!-- Botón para agregar más automóviles -->
+				<button id="btn-filtros">
+					<span class="icon-add"></span>Filtro
+				</button>
+				<!-- Flechas para navegar entre paginas -->
+				<div id="nav-paginas">
+					<button class="btn-nav-paginas"><span class="icon-arrow_left"></span></button>
+					<button class="btn-nav-paginas"><span class="icon-arrow_right"></span></button>
+				</div>
+				<!-- Total de elementos que se muestran por página -->
+				<div id="elementos-pagina">
+					<p>10 de 48</p>
+				</div>
+				<!-- Botón para aplicar acciones a multiples elementos seleccionados -->
+				<button id="btn-mas-acciones">
+					Más<span class="icon-triangle-down"></span>
+				</button>
+			</div>
+
+			<!-- Relleno para ocultar hueco al hacer scroll -->
+			<div id="parche-relleno"></div>
+
+			<!-- ENCABEZADO de la busqueda (Código de barras, nombre, contenido, etc...) -->
+			<div class="contenedor-tabla-encabezado tabla-fila">
+				<!-- Checkbox -->
+				<div id="select" class="tabla-col chk-select"></div>
+				<!-- Placa -->
+				<p class="tabla-col">Placa</p>
+				<!-- Número económico -->
+				<p class="tabla-col">Número económico</p>
+				<!-- Tipo de vehículo -->
+				<p class="tabla-col">Tipo</p>
+				<!-- Número de toneladas de carga -->
+				<p class="tabla-col">Carga</p>
+				<!-- Número de contenedores -->
+				<p class="tabla-col">Contenedores</p>
+				<!-- Kilometraje -->
+				<p class="tabla-col">Aseguradora</p>
+				<!-- Número de póliza de seguro -->
+				<p class="tabla-col">Póliza</p>
+				<!-- Fecha de caducidad de seguro -->
+				<p class="tabla-col">Caducidad de seguro</p>
+				<!-- Status -->
+				<p class="tabla-col">Status</p>
+				<!-- Dar de baja -->
+				<div class="tabla-col"></div>
+			</div>
+		</div>
+	</header>
+	
+	<!-- RESULTADOS: Aqui se pegan los elementos que coinciden con la búsqueda -->
+	<div id="datos" class="contenedor-tabla-resultados"></div>
+	
+	<!-- POP UP -->
+	<div id="popup-lightbox">
+		<div id="popup" class="contenedor-popup">
+			<div class="contenedor-popup-1">
+				<!-- BOTON PARA CERRAR -->
+				<span id="button-cerrar-popup" class="icon-close"></span>
+
+				<!-- FORMULARIO -->
+				<form method="POST" id="form-forall">
+					<div class="contenedor-flex">
+						<!-- PLACA -->
+						<input name="Placa" id="puf-placa" class="nocss-input"/>
+						<!-- STATUS -->
+						<select name="StatusVehiculo" id="puf-status" class='btn-status nocss-select' type='button'><span class='icon-dot'></span></select>
+						<button id="puf-btn-editar" type="button"><span class="icon-edit"></span>Editar</button>
+					</div>
+					<!-- TIPO DE VEHICULO -->
+					<select name="TipoVehiculo" id="puf-tipoVehiculo"></select>
+					
+					<div id="form-p1" class="form-flex">
+						<!-- NÚMERO ECONÓMICO -->
+						<div>
+							<label for="puf-numEconomico">N&uacute;mero econ&oacute;mico</label>
+							<input type="text" name="NumeroEconomico" id="puf-numEconomico" required/> 
+						</div>
+						<!-- CARGA -->
+						<div>
+							<label for="puf-carga">Carga</label>
+							<input type="text" name="CapacidadCarga" id="puf-carga" class="input-50" placeholder="Cantidad" required/>
+							<select class="input-50" name="puf-cargaUnidad" id="puf-cargaUnidad"></select>
+						</div>
+						<!-- MARCA -->
+						<div>
+							<label for="puf-marca">Marca</label>
+							<input type="text" name="Marca" id="puf-marca" required/>
+						</div>
+						<!-- MODELO -->
+						<div>
+							<label for="puf-modelo">Modelo</label>
+							<input type="text" name="Modelo" id="puf-modelo" required/>
+						</div>
+					</div>
+					<div id="form-p2" class="form-flex">
+						<!-- CONTENEDORES -->
+						<div>
+							<label for="contenedores1">Contenedores</label>
+							<div id="contenedores1" class="contenedor-flex margen-contenedor">
+								<span id="idContenedor1" class="numContenedor">1.</span>
+								<input type="text" name="puf-usoContenedor1" id="puf-usoContenedor1" class="puf-usoContenedor" required disabled/>
+								<div id="eliminar-contenedor1" class="button-remove color-remove-red"><span class="icon-remove"></span></div>
+							</div>
+						</div>
+						<button id='btn-agregar-contenedor' type='button'><span class='icon-add'></span>Agregar contenedor</button>
+					</div>
+					<div id="form-p3" class="form-flex">
+						<!-- NÚMERO DE PÓLIZA DE SEGURO -->
+						<div>
+							<label for="puf-poliza">P&oacute;liza de seguro</label>
+							<input type="text" name="NumeroPoliza" id="puf-poliza" required/>
+						</div>
+						<!-- FECHA DE CADUCIDAD DE SEGURO -->
+						<div>
+							<label for="puf-fechaCaducidadSeguro">Fecha de caducidad</label>
+							<input type="date" name="CaducidadSeguro" id="puf-fechaCaducidadSeguro" min="2019-02" required/>
+						</div>
+						<!-- ASEGURADORA -->
+						<div>
+							<label for="puf-aseguradora">Aseguradora</label>
+							<input type="text" name="NombreAseguradora" id="puf-aseguradora" required/>
+						</div>
+					</div>
+					<div id="form-p4" class="form-flex">
+						<!-- CONDICIONES GENERALES -->
+						<div>
+							<label for="puf-condicionesGenerales">Condiciones generales</label>
+							<input type="text" name="CondicionesGenerales" id="puf-condicionesGenerales"  required/>
+						</div>
+						<!-- DESRCIPCIÓN -->
+						<div>
+							<label for="puf-descripcion">Descripci&oacute;n</label>
+							<textarea type="text" name="Descripcion" id="puf-descripcion" required></textarea>
+						</div>
+						<div class="oculto">
+							<input type="number" name="conteo_numContenedores" id="conteo_numContenedores" readonly>		
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="contenedor-popup-2">
+				<div class="contenedor-flex">
+					<div id="puf-titulo-kilometraje">Kilometraje</div>
+					<button id="puf-btn-reg-kilometraje"  type='button'><span class="icon-insert"></span>Nueva revisión</button>
+				</div>
+				<!-- ENCABEZADO de la busqueda (Código de barras, nombre, contenido, etc...) -->
+				<div class="contenedor-tabla-encabezado tabla-fila-kilometraje">
+					<!-- Placa -->
+					<p class="tabla-col">Fecha de revisión</p>
+					<!-- Número económico -->
+					<p class="tabla-col">Kilometraje</p>
+				</div>
+				<div id="tabla-resultados-kilometraje">
+				</div>
+
+				<button id="puf-btn-listo" class="btn-listo"><span class="icon-done"></span>Listo</button>
+			</div>
+		</div>
+	</div>
 </body>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+	// Comentario 1 para probar el funcionamiento de las ramas
+	$(buscarDatos(), AddTipoVehiculo(), AddUnidadCarga(), AddStatusVehiculo());
+	//$(SeatAlert());
+	// Comentario 2 para probar el funcionamiento de las ramas.
+	
+	$(document).on('keyup', '#input-busqueda', function(){
+		var valor = $(this).val();
+  		if(valor != "")buscarDatos(valor);
+  		else buscarDatos();
+	});
+
+	function SeatAlert(){
+
+
+	swal({
+  title: "Estas seguro?",
+  text: "Una vez eliminado, no podras recuperar el registro!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Se ha eliminado el vehiculo!", {
+      icon: "success",
+    });
+  } else {
+    swal("Transaccion canecelada!");
+  }
+});
+
+	}
+	function buscarDatos(consulta){
+        
+		
+  		$.ajax({
+    	url:'php/BuscarVehiculo.php',
+    	type:'post',
+    	dataType:'html',
+    	data:{consulta:consulta},
+  		}).done(function(respuesta){
+    	$("#datos").html(respuesta);
+  		}).fail(function(){
+    	console.log("Error");
+  		});
+
+	}
+	function GetVehiculo(placa){
+		datos = {
+					"placa":placa
+				};
+
+
+		$.ajax({
+        url: "php/GetVehiculo.php",
+        type: "POST",
+        data: datos
+    	}).done(function(respuesta){
+			console.log(respuesta);
+			llenar_generales_popup(respuesta);
+
+    	})
+    	.fail(function(respuesta){
+    		console.log("Error");
+    	});
+
+    	/*Obtiene los contenedores de cada vehiculo*/
+    	$.ajax({
+        url: "php/GetContenedores.php",
+        type: "POST",
+        data: datos
+    	}).done(function(respuesta_usoContenedor){
+
+    		
+			for(i in respuesta_usoContenedor)
+    			console.log(respuesta_usoContenedor[i]);
+    		
+    		llenar_contenedores_popup(respuesta_usoContenedor);
+
+
+    	})
+    	.fail(function(respuesta_contenedores){
+    		console.log("Error");
+    	});
+
+    	//Obtiene los KILOMETRAJES de cada vehiculo
+    	$.ajax({
+        url: "php/GetKilometrajes.php",
+        type: "POST",
+        data: datos
+    	}).done(function(respuesta_kilometraje){
+			for(i in respuesta_kilometraje)
+				console.log(respuesta_kilometraje[i]);
+			
+			llenar_kilometraje_popup(respuesta_kilometraje)
+    	})
+    	.fail(function(respuesta_kilometrajes){
+    		console.log("Error KILOMETRAJES");
+		});
+		
+	}
+	
+	function EliminarVehiculo(placa){
+		console.log(placa);
+		datos = {
+					"Placa":placa
+				};
+
+		swal({
+  		title: "Estas seguro?",
+  		text: "Una vez eliminado el vehiculo, no podras recuperar el registro!",
+  		icon: "warning",
+  		buttons: true,
+  		dangerMode: true,
+		})
+		.then((willDelete) => {
+  		if (willDelete) {
+  			$.ajax({
+			  	type: "post",
+			  	url: "php/EliminarVehiculo.php",
+			  	data: datos,
+			  	success:function(response){
+			  		console.log(response);
+			  		if(response==1){
+			 			buscarDatos();
+			 			swal("Se ha eliminado el vehiculo!", {
+      					icon: "success",
+    					});
+							 					
+			  		}else{
+						swal("Ooops hubo un problema!");	  			
+			  		}
+			  	}
+			  	});
+
+    	
+  		} else {
+    	swal("Transaccion cancelada!");
+  		}
+		});
+		
+
+
+			
+
+			
+		
+
+
+	}
+	
+
+	function AddTipoVehiculo(){
+		
+		$.ajax({
+        url: "php/CatTipoVehiculo.php",
+        type: "POST"
+    	}).done(function(respuesta){
+    		var padre=document.getElementById('puf-tipoVehiculo');
+    		for(i in respuesta){
+    			var elemento = document.createElement('option');
+				var contenido = document.createTextNode(respuesta[i]);
+				elemento.appendChild(contenido);
+				padre.appendChild(elemento);
+    		}
+    	}).fail(function(respuesta){
+    		console.log("Error");
+    	});
+    
+
+
+	}
+	
+	function AddStatusVehiculo(){
+		//console.log("crayolis");
+		$.ajax({
+        url: "php/CatStatusVehiculo.php",
+        type: "POST"
+    	}).done(function(respuesta){
+			var padre=document.getElementById('puf-status');
+			for(i in respuesta){
+    			var elemento = document.createElement('option');
+				var contenido = document.createTextNode(respuesta[i]);
+				elemento.appendChild(contenido);
+				padre.appendChild(elemento);
+    		}
+    	}).fail(function(respuesta){
+    		console.log("Error");
+    	});
+	}
+	
+
+
+    function AddUnidadCarga(){
+
+		$.ajax({
+        url: "php/CatUnidadCarga.php",
+        type: "POST"
+    	}).done(function(respuesta){
+    		var padre=document.getElementById('puf-cargaUnidad');
+    		for(i in respuesta){
+    			var elemento = document.createElement('option');
+				var contenido = document.createTextNode(respuesta[i]);
+				elemento.appendChild(contenido);
+				padre.appendChild(elemento);
+    		}
+    	}).fail(function(respuesta){
+    		console.log("Error");
+    	});
+
+
+	}
+	
+
+
+
+</script>
 
 </html>

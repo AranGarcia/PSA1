@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>CRUD | Registro</title>
+	<!-- ENLACES A CSS -->
+	<link rel="stylesheet" type="text/css" href="css/master.css">
+	<link rel="stylesheet" type="text/css" href="css/registro-vehiculo.css">
+	<!-- ENLACES A ICONOS -->
+	<link rel="stylesheet" type="text/css" href="icon/crud_icons.css">
+	<!-- ENLACES A FUNTE -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet"> 
+	<script src="js/validar.js"></script>
+	
+</head>
+<body>
+	<header>
+		<div id="header-background">
+			<div id="header-p1" class="header-p12">
+				<!-- TITULO -->
+				<div id="header-titulo">
+					<h1>Vehículos Recolectores</h1>
+				</div>
+			</div>
+
+			<div id="header-p2" class="header-p12 contenedor-blanco">
+				<!-- SUBTITULO: Registro de vehículo -->
+				<div id="header-subtitulo">
+					<h2>Registro de vehículo</h2>
+					<a href="index.html"><button class="btn-regresar"><span class="icon-arrow_left"></span>Regresar</button></a>
+				</div>
+			</div>
+		</div>
+	</header>
+	
+	<!-- tabla de registro-->
+	<div class="contenedor-form">
+		<form id="form-registro" action="php/Registrar.php" method="post" onsubmit="return validar();">
+			<div id="form-p1" class="form-flex">
+				<!-- PLACA -->
+				<div>
+					<label for="Placa">Placa</label>
+					<input type="text" id="Placa" name="Placa"required/>
+				</div>
+				<!-- NÚMERO ECONÓMICO -->
+				<div>
+					<label for="NumeroEconomico">N&uacute;mero econ&oacute;mico</label>
+					<input type="text" id="NumeroEconomico" name="NumeroEconomico"required/>
+				</div>
+				<!-- STATUS -->
+				<div>
+					<label for="TipoVehiculo">Status vehículo</label>
+					<select name="StatusVehiculo" id="StatusVehiculo"></select>
+				</div>
+				<!-- TIPO DE VEHICULO -->
+				<div>
+					<label for="TipoVehiculo">Tipo de vehículo</label>
+					<select name="TipoVehiculo" id="TipoVehiculo"></select>
+				</div>
+				<!-- MARCA -->
+				<div>
+					<label for="Marca">Marca</label>
+					<input type="text" id="Marca" name="Marca"required/>
+				</div>
+				<!-- MODELO -->
+				<div>
+					<label for="puf-modelo">Modelo</label>
+					<input type="text" id="Modelo" name="Modelo"required/>
+				</div>
+				<div>
+					<label for="Kilometraje">Kilometraje</label>
+					<input type="number" id="Kilometraje" name="Kilometraje"required/>
+				</div>
+				<div>
+					<label for="FechaRevisionKilometraje">Fecha de revision de kilometraje</label>
+					<input type="date" id="FechaRevisionKilometraje" name="FechaRevisionKilometraje" min ="2019-02-07" value= "2019-02-07" required/>
+				</div>
+				<!-- CARGA -->
+				<div>
+					<label for="CapacidadCarga">Capacidad de carga</label>
+					<input type="number" id="CapacidadCarga" name="CapacidadCarga" class="input-50" placeholder="Unidad">
+					<select class="input-50" name="puf-cargaUnidad" id="puf-cargaUnidad"></select>
+				</div>
+			</div>
+				
+			<div id="form-p2" class="form-flex">
+				<!-- CONTENEDORES -->
+				<div>
+					<label for="contenedores">Contenedores</label>
+					<div id="contenedores" class="contenedor-flex">
+						<span class="numContenedor">1.</span>
+						<!-- USO -->
+						<input type="text" name="UsoContenedor" id="UsoContenedor" pattern="[0-9a-zA-z]+" placeholder="Uso" required/>
+						<div id="eliminar-contenedor" class="button-remove"><span class="icon-remove"></span></div>
+					</div>
+				</div>
+				<button id='btn-agregar-contenedor'><span class='icon-add'></span>Agregar contenedor</button>
+			</div>
+			
+			<div id="form-p3" class="form-flex">
+				<!-- NÚMERO DE PÓLIZA DE SEGURO -->
+				<div>
+					<label for="NumeroPoliza">P&oacute;liza de seguro</label>
+					<input type="text" id="NumeroPoliza" name="NumeroPoliza"/>
+				</div>
+				<!-- FECHA DE CADUCIDAD DE SEGURO -->
+				<div>
+					<label for="CaducidadSeguro">Fecha de caducidad</label>
+					<input type="date" id="CaducidadSeguro" name="CaducidadSeguro" min ="2019-02-07" value= "2019-02-07"required/>
+				</div>
+				<!-- ASEGURADORA -->
+				<div>
+					<label for="NombreAseguradora">Aseguradora</label>
+					<input type="text" id="NombreAseguradora" name="NombreAseguradora"required/>
+				</div>
+			</div>
+				
+			<div id="form-p4" class="form-flex">
+				<!-- CONDICIONES GENERALES -->
+				<div>
+					<label for="CondicionesGenerales">Condiciones generales</label>
+					<input type="text" id="CondicionesGenerales" name="CondicionesGenerales"required/>
+				</div>
+				<!-- DESRCIPCIÓN -->
+				<div>
+					<label for="Descripcion">Descripci&oacute;n</label>
+					<input type="text" id="Descripcion" name="Descripcion"required/>
+				</div>
+			</div>
+			<button class="btn-listo" type="submit" value="Registrar" name="btn-enviar"><span class="icon-done"></span>Listo</button>
+		</form>
+	</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"> </script> 
+<!-- SweatAlert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+
+
+	$(AddTipoVehiculo(),AddStatusVehiculo(), AddUnidadCarga());
+
+
+	function AddTipoVehiculo(){
+		
+		$.ajax({
+        url: "php/CatTipoVehiculo.php",
+        type: "POST"
+    	}).done(function(respuesta){
+    		var padre=document.getElementById('TipoVehiculo');
+    		for(i in respuesta){
+    			var elemento = document.createElement('option');
+				var contenido = document.createTextNode(respuesta[i]);
+				elemento.appendChild(contenido);
+				padre.appendChild(elemento);
+    		}
+    	}).fail(function(respuesta){
+    		console.log("Error");
+    	});
+    
+
+
+    }
+
+	
+	function AddStatusVehiculo(){
+		//console.log("crayolis");
+		$.ajax({
+        url: "php/CatStatusVehiculo.php",
+        type: "POST"
+    	}).done(function(respuesta){
+    		var padre=document.getElementById('StatusVehiculo');
+    		for(i in respuesta){
+    			var elemento = document.createElement('option');
+				var contenido = document.createTextNode(respuesta[i]);
+				elemento.appendChild(contenido);
+				padre.appendChild(elemento);
+    		}
+    	}).fail(function(respuesta){
+    		console.log("Error");
+    	});
+
+	}
+	function AddUnidadCarga(){
+
+		$.ajax({
+        url: "php/CatUnidadCarga.php",
+        type: "POST"
+    	}).done(function(respuesta){
+    		var padre=document.getElementById('puf-cargaUnidad');
+    		for(i in respuesta){
+    			var elemento = document.createElement('option');
+				var contenido = document.createTextNode(respuesta[i]);
+				elemento.appendChild(contenido);
+				padre.appendChild(elemento);
+    		}
+    	}).fail(function(respuesta){
+    		console.log("Error");
+    	});
+
+
+	}
+</script>
+</html>
+
+
