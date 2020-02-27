@@ -1,0 +1,10 @@
+version: '3.2'
+services:
+  php-apache:
+    build:
+      context: ./apache-php
+    ports:
+      - 8001:8001
+      - 8002:8002
+    volumes:
+      - ./public_html/:/var/www/html
